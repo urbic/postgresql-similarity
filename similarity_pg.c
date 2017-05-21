@@ -8,9 +8,9 @@
 PG_MODULE_MAGIC;
 #endif
 
-PG_FUNCTION_INFO_V1(fstrcmp_pg);
+PG_FUNCTION_INFO_V1(similarity_pg);
 
-Datum fstrcmp_pg(PG_FUNCTION_ARGS)
+Datum similarity_pg(PG_FUNCTION_ARGS)
 {
 	text *text1=PG_GETARG_TEXT_P(0);
 	text *text2=PG_GETARG_TEXT_P(1);

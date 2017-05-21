@@ -1,18 +1,19 @@
 # VARIABLES
 
-VERSION=1.0
-PACKAGE=postgresql92-fstrcmp
+EXTENSION=similarity
+PACKAGE=postgresql-$(EXTENSION)
+VERSION=$(shell rpm -q --qf '%{version}' --specfile $(PACKAGE).spec)
 PACKAGE_VERSION=$(PACKAGE)-$(VERSION)
 RPMSPEC=$(PACKAGE).spec
 RPMSOURCEDIR=$(shell rpm -E %_sourcedir)
-DISTARCHIVE=$(RPMSOURCEDIR)/$(PACKAGE).tar.xz
+DISTARCHIVE=$(RPMSOURCEDIR)/$(PACKAGE_VERSION).tar.xz
 SOURCES=\
 		fstrcmp.c \
 		fstrcmp.h \
-		fstrcmp_pg.c \
-		fstrcmp.sql \
-		uninstall_fstrcmp.sql \
-		README.fstrcmp \
+		$(EXTENSION)_pg.c \
+		$(EXTENSION).control \
+		$(EXTENSION)--$(VERSION).sql \
+		README.md \
 		Makefile \
 		$(PACKAGE).spec
 
@@ -22,7 +23,7 @@ export DESTDIR
 
 pgsharedir?=$(DESTDIR)$(shell pg_config --sharedir)
 pglibdir?=$(DESTDIR)$(shell pg_config --libdir)
-pgdocdir?=$(DESTDIR)$(shell pg_config --docdir)-fstrcmp
+pgdocdir?=$(DESTDIR)$(shell pg_config --docdir)/../$(PACKAGE)
 
 #=============================================================================
 # PHONY targets
@@ -38,16 +39,16 @@ pgdocdir?=$(DESTDIR)$(shell pg_config --docdir)-fstrcmp
 #==============================================================================
 # Compile section
 
-all: fstrcmp.so
+all: $(EXTENSION).so
 
 fstrcmp.o: fstrcmp.c fstrcmp.h
 	$(CC) $(CXXFLAGS) -fpic -c $<
 
-fstrcmp_pg.o: fstrcmp_pg.c fstrcmp.h
+$(EXTENSION)_pg.o: $(EXTENSION)_pg.c fstrcmp.h
 	$(CC) $(CXXFLAGS) -fpic -c $<
 
-fstrcmp.so: fstrcmp.o fstrcmp_pg.o
-	$(CC) $(CXXFLAGS) -shared -licuuc -o $@ $^
+$(EXTENSION).so: fstrcmp.o $(EXTENSION)_pg.o
+	$(CC) $(CXXFLAGS) -shared -Wl,-soname,$(EXTENSION) -licuuc -o $@ $^
 
 #==============================================================================
 # Test section
@@ -83,8 +84,8 @@ release-rpm: release-tarzx
 
 install:
 	install -d $(pglibdir)
-	install fstrcmp.so $(pglibdir)
+	install $(EXTENSION).so $(pglibdir)
 	install -d $(pgdocdir)
-	install -m 0644 README.fstrcmp $(pgdocdir)
-	install -d $(pgsharedir)/fstrcmp/
-	install -m 0644 fstrcmp.sql uninstall_fstrcmp.sql $(pgsharedir)/fstrcmp/
+	install -m 0644 README.md $(pgdocdir)
+	install -d $(pgsharedir)/extension/
+	install -m 0644 $(EXTENSION).control $(EXTENSION)--$(VERSION).sql $(pgsharedir)/extension

@@ -1,0 +1,5 @@
+# similarity extension
+comment = 'calculate similarities between strings'
+default_version = '1.0'
+module_pathname = '$libdir/similarity'
+relocatable = true
