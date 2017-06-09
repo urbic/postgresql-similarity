@@ -1,5 +1,9 @@
 language: c
 
+dist: trusty
+
+sudo: required
+
 env:
   - PGVERSION=9.1
   - PGVERSION=9.2
