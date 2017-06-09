@@ -21,6 +21,8 @@ endif
 
 SHLIB_LINK+=-licuuc
 
+REGRESS=regress/1
+
 ifndef PG_CONFIG
 PG_CONFIG=pg_config
 endif
