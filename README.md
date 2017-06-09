@@ -44,7 +44,7 @@ This software and documentation are released under the [GPL-2.0
 license](https://spdx.org/licenses/GPL-2.0.html).
 
 ## Author
-[Anton Shvetz](https://github.com/urbic) <mailto:tz@sectorb.msk.ru>
+[Anton Shvetz](mailto:tz@sectorb.msk.ru?subject=postgresql-similarity)
 
 (the underlying fstrcmp function was taken from gnu diffutils and modified by
 [Peter Miller](mailto:pmiller@agso.gov.au) and [Marc Lehmann](mailto:schmorp@schmorp.de)).
