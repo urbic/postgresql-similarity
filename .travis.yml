@@ -20,3 +20,4 @@ before_script:
 script:
   - make && sudo make install DESTDIR=/
   - psql -c "CREATE EXTENSION similarity" similarity_regress
+  - make -C regress
