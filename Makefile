@@ -1,99 +1,30 @@
-# VARIABLES
+MODULE_big=similarity
+OBJS=\
+	similarity_pg.o \
+	fstrcmp.o \
+	$(NULL)
 
 EXTENSION=similarity
-PACKAGE=postgresql-$(EXTENSION)
-VERSION=1.0
-PACKAGE_VERSION=$(PACKAGE)-$(VERSION)
-RPMSPEC=$(PACKAGE).spec
-RPMSOURCEDIR=$(shell rpm -E %_sourcedir)
-#DISTARCHIVE=$(RPMSOURCEDIR)/$(PACKAGE_VERSION).tar.xz
-DISTARCHIVE=$(PACKAGE_VERSION).tar.xz
-SRCDIR=src
-SOURCES=\
-		$(SRCDIR)/fstrcmp.c \
-		$(SRCDIR)/fstrcmp.h \
-		$(SRCDIR)/$(EXTENSION)_pg.c \
-		$(SRCDIR)/$(EXTENSION).control \
-		$(SRCDIR)/$(EXTENSION).sql \
-		README.md \
-		LICENSE \
-		Makefile \
-		$(PACKAGE).spec
+DATA=\
+	$(EXTENSION)--1.0.sql \
+	$(NULL)
 
-CXXFLAGS=-I$(shell pg_config --includedir-server) $(shell pg_config --cflags) $(shell pg_config --cflags_sl)
+EXTRA_CLEAN+=-r $(RPM_BUILD_ROOT)
 
-export DESTDIR
+PG_CPPFLAGS+=-fPIC
+fstrcmp.o: override CFLAGS+=-std=c99
 
-pgsharedir?=$(DESTDIR)$(shell pg_config --sharedir)
-pglibdir?=$(DESTDIR)$(shell pg_config --libdir)
-pgdocdir?=$(DESTDIR)$(shell pg_config --docdir)/../$(PACKAGE)
+ifdef DEBUG
+COPT+=-O0
+CXXFLAGS+=-g -O0
+endif
 
-#=============================================================================
-# PHONY targets
+SHLIB_LINK+=-licuuc
 
-.PHONY: \
-	all \
-	test \
-	install \
-	release-rpm \
-	release-tarxz \
-	show-version \
-	clean
+ifndef PG_CONFIG
+PG_CONFIG=pg_config
+endif
 
-#==============================================================================
-# Compile section
+PGXS:=$(shell $(PG_CONFIG) --pgxs)
+include $(PGXS)
 
-all: $(EXTENSION).so
-
-fstrcmp.o: $(SRCDIR)/fstrcmp.c $(SRCDIR)/fstrcmp.h
-	$(CC) $(CXXFLAGS) -c $<
-
-$(EXTENSION)_pg.o: $(SRCDIR)/$(EXTENSION)_pg.c $(SRCDIR)/fstrcmp.h
-	$(CC) $(CXXFLAGS) -c $<
-
-$(EXTENSION).so: fstrcmp.o $(EXTENSION)_pg.o
-	$(CC) $(CXXFLAGS) -shared -Wl,-soname,$(EXTENSION) -licuuc -o $@ $^
-
-#==============================================================================
-# Test section
-
-test:
-
-#==============================================================================
-# Distribution section
-
-release-tarxz: $(DISTARCHIVE)
-
-$(DISTARCHIVE): $(SOURCES)
-	@mkdir -p DISTROOT/
-	@ln -fs .. DISTROOT/$(PACKAGE)
-	@tar -C DISTROOT -cvJf $@ $(patsubst %,$(PACKAGE)/%,$(SOURCES))
-	@$(RM) DISTROOT/$(PACKAGE)
-	@rmdir DISTROOT
-
-#==============================================================================
-# Distribution section
-
-clean:
-	@$(RM) *.o *.so
-
-distclean:
-	$(RM) $(PACKAGE).tar.xz
-
-release-rpm: release-tarxz
-	rpmbuild -ba --clean $(RPMSPEC)
-
-#==============================================================================
-# Install section
-
-install:
-	install -d $(pglibdir)
-	install $(EXTENSION).so $(pglibdir)
-	install -d $(pgdocdir)
-	install -m 0644 README.md LICENSE $(pgdocdir)
-	install -d $(pgsharedir)/extension/
-	install -m 0644 $(SRCDIR)/$(EXTENSION).control $(pgsharedir)/extension
-	install -m 0644 $(SRCDIR)/$(EXTENSION).sql $(pgsharedir)/extension/$(EXTENSION)--$(VERSION).sql
-
-show-version:
-	@echo $(VERSION)
