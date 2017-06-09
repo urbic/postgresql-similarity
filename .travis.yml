@@ -18,5 +18,5 @@ before_script:
   - createdb similarity_regress
 
 script:
-  - make DESTDIR=/ && sudo make install
+  - make && sudo make install DESTDIR=/
   - psql -c "CREATE EXTENSION similarity" similarity_regress
