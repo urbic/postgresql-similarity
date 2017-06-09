@@ -2,7 +2,7 @@
 
 EXTENSION=similarity
 PACKAGE=postgresql-$(EXTENSION)
-VERSION=$(shell rpm -q --qf '%{version}' --specfile $(PACKAGE).spec)
+VERSION=1.0
 PACKAGE_VERSION=$(PACKAGE)-$(VERSION)
 RPMSPEC=$(PACKAGE).spec
 RPMSOURCEDIR=$(shell rpm -E %_sourcedir)
@@ -37,6 +37,7 @@ pgdocdir?=$(DESTDIR)$(shell pg_config --docdir)/../$(PACKAGE)
 	install \
 	release-rpm \
 	release-tarxz \
+	show-version \
 	clean
 
 #==============================================================================
@@ -93,3 +94,6 @@ install:
 	install -d $(pgsharedir)/extension/
 	install -m 0644 $(SRCDIR)/$(EXTENSION).control $(pgsharedir)/extension
 	install -m 0644 $(SRCDIR)/$(EXTENSION).sql $(pgsharedir)/extension/$(EXTENSION)--$(VERSION).sql
+
+show-version:
+	@echo $(VERSION)

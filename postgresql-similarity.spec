@@ -1,5 +1,4 @@
 %define extension similarity
-%define version 1.0
 
 %define _pg_libdir %(pg_config --libdir)
 %define _pg_sharedir %(pg_config --sharedir)
@@ -7,7 +6,7 @@
 
 Name:			postgresql-%{extension}
 Summary:		PostgreSQL extension that calculates the similarity between two strings
-Version:		%{version}
+Version:		1.0
 Release:		0
 Source:			%{name}-%{version}.tar.xz
 URL:			https://github.com/urbic/%{name}
