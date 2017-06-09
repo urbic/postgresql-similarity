@@ -6,7 +6,7 @@
 %define _pg_docdir %(pg_config --docdir)
 
 Name:			postgresql-%{extension}
-Summary:		Function similarity to make fuzzy comparisons between strings
+Summary:		PostgreSQL extension that calculates the similarity between two strings
 Version:		%{version}
 Release:		0
 Source:			%{name}-%{version}.tar.xz
@@ -15,10 +15,11 @@ Group:			Productivity/Databases/Tools
 BuildRoot:		%{_tmppath}/%{name}-%{version}
 BuildRequires: 	gcc make postgresql-devel libicu-devel
 Requires:		postgresql postgresql-server
-License:		Zlib
+License:		GPL-2.0
 
 %description
-Function similarity to make fuzzy comparisons between strings.
+PostgreSQL extension package which provides functions that calculate the
+similarity between two strings.
 
 %prep
 %setup -c
@@ -34,8 +35,9 @@ Function similarity to make fuzzy comparisons between strings.
 
 %files
 %defattr(-,root,root,0644)
-%{_pg_docdir}/../%{name}/README.md
+%{_pg_docdir}/../%{name}
 %{_pg_libdir}/%{extension}.so
+%{_pg_sharedir}/extension
 %{_pg_sharedir}/extension/%{extension}--%{version}.sql
 %{_pg_sharedir}/extension/%{extension}.control
 

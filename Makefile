@@ -6,18 +6,21 @@ VERSION=$(shell rpm -q --qf '%{version}' --specfile $(PACKAGE).spec)
 PACKAGE_VERSION=$(PACKAGE)-$(VERSION)
 RPMSPEC=$(PACKAGE).spec
 RPMSOURCEDIR=$(shell rpm -E %_sourcedir)
-DISTARCHIVE=$(RPMSOURCEDIR)/$(PACKAGE_VERSION).tar.xz
+#DISTARCHIVE=$(RPMSOURCEDIR)/$(PACKAGE_VERSION).tar.xz
+DISTARCHIVE=$(PACKAGE_VERSION).tar.xz
+SRCDIR=src
 SOURCES=\
-		fstrcmp.c \
-		fstrcmp.h \
-		$(EXTENSION)_pg.c \
-		$(EXTENSION).control \
-		$(EXTENSION)--$(VERSION).sql \
+		$(SRCDIR)/fstrcmp.c \
+		$(SRCDIR)/fstrcmp.h \
+		$(SRCDIR)/$(EXTENSION)_pg.c \
+		$(SRCDIR)/$(EXTENSION).control \
+		$(SRCDIR)/$(EXTENSION).sql \
 		README.md \
+		LICENSE \
 		Makefile \
 		$(PACKAGE).spec
 
-CXXFLAGS=-I$(shell pg_config --includedir-server)
+CXXFLAGS=-I$(shell pg_config --includedir-server) $(shell pg_config --cflags) $(shell pg_config --cflags_sl)
 
 export DESTDIR
 
@@ -33,7 +36,7 @@ pgdocdir?=$(DESTDIR)$(shell pg_config --docdir)/../$(PACKAGE)
 	test \
 	install \
 	release-rpm \
-	release-tarzx \
+	release-tarxz \
 	clean
 
 #==============================================================================
@@ -41,11 +44,11 @@ pgdocdir?=$(DESTDIR)$(shell pg_config --docdir)/../$(PACKAGE)
 
 all: $(EXTENSION).so
 
-fstrcmp.o: fstrcmp.c fstrcmp.h
-	$(CC) $(CXXFLAGS) -fpic -c $<
+fstrcmp.o: $(SRCDIR)/fstrcmp.c $(SRCDIR)/fstrcmp.h
+	$(CC) $(CXXFLAGS) -c $<
 
-$(EXTENSION)_pg.o: $(EXTENSION)_pg.c fstrcmp.h
-	$(CC) $(CXXFLAGS) -fpic -c $<
+$(EXTENSION)_pg.o: $(SRCDIR)/$(EXTENSION)_pg.c $(SRCDIR)/fstrcmp.h
+	$(CC) $(CXXFLAGS) -c $<
 
 $(EXTENSION).so: fstrcmp.o $(EXTENSION)_pg.o
 	$(CC) $(CXXFLAGS) -shared -Wl,-soname,$(EXTENSION) -licuuc -o $@ $^
@@ -76,7 +79,7 @@ clean:
 distclean:
 	$(RM) $(PACKAGE).tar.xz
 
-release-rpm: release-tarzx
+release-rpm: release-tarxz
 	rpmbuild -ba --clean $(RPMSPEC)
 
 #==============================================================================
@@ -86,6 +89,7 @@ install:
 	install -d $(pglibdir)
 	install $(EXTENSION).so $(pglibdir)
 	install -d $(pgdocdir)
-	install -m 0644 README.md $(pgdocdir)
+	install -m 0644 README.md LICENSE $(pgdocdir)
 	install -d $(pgsharedir)/extension/
-	install -m 0644 $(EXTENSION).control $(EXTENSION)--$(VERSION).sql $(pgsharedir)/extension
+	install -m 0644 $(SRCDIR)/$(EXTENSION).control $(pgsharedir)/extension
+	install -m 0644 $(SRCDIR)/$(EXTENSION).sql $(pgsharedir)/extension/$(EXTENSION)--$(VERSION).sql
