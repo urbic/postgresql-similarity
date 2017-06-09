@@ -1,0 +1,18 @@
+language: c
+
+env:
+  - PGVERSION=9.1
+  - PGVERSION=9.2
+  - PGVERSION=9.3
+
+before_script:
+  - export PATH=/usr/lib/postgresql/$PGVERSION/bin:$PATH
+  - sudo /etc/init.d/postgresql stop
+  - sudo /etc/init.d/postgresql start $PGVERSION
+  - sudo apt-get install postgresql-server-dev-$PGVERSION
+  - sudo apt-get install postgresql-common
+  - createdb similarity_regress
+
+script:
+  - make DESTDIR=/ && sudo make install
+  - psql -c "CREATE EXTENSION similarity" similarity_regress
