@@ -5,7 +5,7 @@ calculate the similarity between two strings.
 
 ## Synopsis
 
-### `similarity(text` _`string1`_`, text` _`string2`_`, double` _`limit`_`)`
+### `similarity(text string1, text string2, double limit)`
 
 * _`string1`_, _`string2`_ — strings to compare
 * _`limit`_ — minimum similarity of two strings
@@ -20,11 +20,11 @@ result will be invalid but lower than the given _`limit`_. You can use this to
 speed up the common case of searching for the most similar string from a set by
 specifing the maximum similarity found so far.
 
-### `similarity(text` _`string1`_`, text` _`string2`_`)`
+### `similarity(text string1, text string2)`
 
 * _`string1`_, _`string2`_ — strings to compare
 
-The same as `similarity(`_`string1`_`, ` _`string2`_`, 0)`.
+The same as `similarity(string1, string2, 0)`.
 
 ## See also
 
