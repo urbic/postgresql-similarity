@@ -15,10 +15,10 @@ before_script:
   - sudo /etc/init.d/postgresql start $PGVERSION
   - sudo apt-get install postgresql-server-dev-$PGVERSION
   - sudo apt-get install postgresql-common
-  - createdb similarity_regress
+#  - createdb similarity_regress
 
 script:
   - make && sudo make install DESTDIR=/
-  - psql -c "CREATE EXTENSION similarity" similarity_regress
+#  - psql -c "CREATE EXTENSION similarity" similarity_regress
   - make installcheck
   - cat results/1*
