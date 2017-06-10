@@ -1,0 +1,20 @@
+Source: __OBS_PACKAGE_NAME__
+Section: contrib/database
+Priority: optional
+Maintainer: Anton Shvetz <tz@sectorb.msk.ru>
+Build-Depends: debhelper (>= 9),
+	postgresql-common,
+	postgresql-server-dev-all,
+	libicu-dev,
+Vcs-Git: https://github.com/urbic/postgresql-similarity.git
+Vcs-Browser: https://github.com/urbic/postgresql-similarity
+Homepage: https://github.com/urbic/postgresql-similarity
+
+Package: __OBS_PACKAGE_NAME__
+Architecture: any
+Depends: debhelper (>= 9),
+	postgresql-server,
+	libicu,
+Description: __OBS_PACKAGE_SUMMARY__
+	PostgreSQL extension package which provides functions that calculate
+	similarity between two strings.

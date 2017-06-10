@@ -29,6 +29,48 @@ specifing the maximum similarity found so far.
 
 The same as `similarity(string1, string2, 0)`.
 
+## Installation
+
+### Build and install the extension package from source tarball
+
+To install **postgresql-similarity** extension type the following commands as
+root (assuming that X.X is the version of a package):
+```bash
+tar -xvf postgresql-similarity-X.X.tar.xz
+cd postgresql-similarity-X.X
+make && make install
+```
+
+### Install pre-built binary packages
+
+Pre-built binary packages for **openSUSE**, **Fedora**, **Mageia**, **RHEL**,
+**CentOS**, **Debian** and **Ubuntu** are available at [openSUSE Build
+Service](https://software.opensuse.org/download.html?project=home%3Aconcyclic&package=postgresql-similarity).
+
+### Install the extension into database
+
+To install the extension into database _`dbname`_ type the following commans as
+root:
+```bash
+su postgres -c 'psql dbname -c "CREATE EXTENSION similarity"'
+```
+
+Test the extension:
+```bash
+psql dbname -c "SELECT similarity('similarity', 'distinction')"
+```
+```
+    similarity     
+-------------------
+ 0.285714285714286
+(1 row)
+```
+
+To uninstall the extension type:
+```bash
+su postgres -c 'psql dbname -c "DROP EXTENSION similarity"'
+```
+
 ## See also
 
 The basic algorithm is described in: [“An O(ND) Difference Algorithm and its

@@ -26,4 +26,3 @@ addons:
 script:
   - make && sudo make install DESTDIR=/
   - make installcheck
-  - cat results/1*
