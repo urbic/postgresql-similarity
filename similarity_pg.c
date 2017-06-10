@@ -45,5 +45,3 @@ Datum similarity_pg(PG_FUNCTION_ARGS)
 
 	PG_RETURN_FLOAT8(ret);
 }
-
-

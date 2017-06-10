@@ -8,7 +8,7 @@ calculate the similarity between two strings.
 
 ## Synopsis
 
-### `similarity(text string1, text string2, double limit)`
+### `similarity(text string1, text string2, float limit)`
 
 * _`string1`_, _`string2`_ — strings to compare
 * _`limit`_ — minimum similarity of two strings
