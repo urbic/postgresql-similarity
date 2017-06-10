@@ -19,7 +19,7 @@ before_script:
 addons:
   apt:
     packages:
-      - postgresql-server-dev-$PGVERSION
+      - postgresql-server-dev
       - postgresql-common
 
 script:
