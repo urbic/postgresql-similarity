@@ -21,3 +21,4 @@ script:
   - make && sudo make install DESTDIR=/
   - psql -c "CREATE EXTENSION similarity" similarity_regress
   - make installcheck
+  - cat results/1*
