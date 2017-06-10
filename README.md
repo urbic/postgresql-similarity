@@ -3,6 +3,9 @@
 This is the PostgreSQL extension package which provides functions that
 calculate the similarity between two strings.
 
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+[![Build Status](https://secure.travis-ci.org/urbic/postgresql-similarity.png)](http://travis-ci.org/urbic/postgresql-similarity)
+
 ## Synopsis
 
 ### `similarity(text string1, text string2, double limit)`
