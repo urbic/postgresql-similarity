@@ -13,12 +13,16 @@ before_script:
   - export PATH=/usr/lib/postgresql/$PGVERSION/bin:$PATH
   - sudo /etc/init.d/postgresql stop
   - sudo /etc/init.d/postgresql start $PGVERSION
-  - sudo apt-get install postgresql-server-dev-$PGVERSION
-  - sudo apt-get install postgresql-common
-#  - createdb similarity_regress
+#  - sudo apt-get install postgresql-server-dev-$PGVERSION
+#  - sudo apt-get install postgresql-common
+
+addons:
+  apt:
+    packages:
+      - postgresql-server-dev-$PGVERSION
+      - postgresql-common
 
 script:
   - make && sudo make install DESTDIR=/
-#  - psql -c "CREATE EXTENSION similarity" similarity_regress
   - make installcheck
   - cat results/1*
