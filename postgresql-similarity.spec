@@ -5,7 +5,7 @@
 %define _pg_docdir %(pg_config --docdir)
 
 Name:			postgresql-%{extension}
-Summary:		PostgreSQL extension that calculates the similarity between two strings
+Summary:		PostgreSQL extension that calculates similarity between two strings
 Version:		1.0
 Release:		0
 Source:			%{name}-%{version}.tar.xz
@@ -17,17 +17,17 @@ Requires:		postgresql postgresql-server
 License:		GPL-2.0
 
 %description
-PostgreSQL extension package which provides functions that calculate the
-similarity between two strings.
+PostgreSQL extension package which provides functions that calculate similarity
+between two strings.
 
 %prep
-%setup -c
+%setup -q
 
 %build
-%{__make} -C %{name}
+%{__make}
 
 %install
-%makeinstall -C %{name} DESTDIR=%{buildroot}
+%{__make} install DESTDIR=%{buildroot} docdir=%{_pg_docdir}/../%{name}
 
 %clean
 %{__rm} -rf %{buildroot}

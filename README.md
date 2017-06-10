@@ -1,7 +1,7 @@
 # postgresql-similarity
 
 This is the PostgreSQL extension package which provides functions that
-calculate the similarity between two strings.
+calculate similarity between two strings.
 
 [![License](https://img.shields.io/badge/license-GPL--2.0-blue.svg)](https://img.shields.io/badge/license-GPL--2.0-blue.svg)
 [![Build Status](https://secure.travis-ci.org/urbic/postgresql-similarity.png)](http://travis-ci.org/urbic/postgresql-similarity)
@@ -13,7 +13,7 @@ calculate the similarity between two strings.
 * _`string1`_, _`string2`_ — strings to compare
 * _`limit`_ — minimum similarity of two strings
 
-Calculate the similarity of two strings _`string1`_ and _`string2`_. A value of
+Calculate similarity of two strings _`string1`_ and _`string2`_. A value of
 0 means that the strings are entirely different. A value of 1 means that the
 strings are identical. Everything else lies between 0 and 1 and describes the
 amount of similarity between the strings. Argument _`limit`_ that gives the
