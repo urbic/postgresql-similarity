@@ -13,13 +13,12 @@ before_script:
   - export PATH=/usr/lib/postgresql/$PGVERSION/bin:$PATH
   - sudo /etc/init.d/postgresql stop
   - sudo /etc/init.d/postgresql start $PGVERSION
-#  - sudo apt-get install postgresql-server-dev-$PGVERSION
+  - sudo apt-get install postgresql-server-dev-$PGVERSION
 #  - sudo apt-get install postgresql-common
 
 addons:
   apt:
     packages:
-      - postgresql-server-dev
       - postgresql-common
 
 script:
