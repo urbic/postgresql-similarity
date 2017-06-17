@@ -3,7 +3,7 @@
 This is the PostgreSQL extension package which provides functions that
 calculate similarity between two strings.
 
-[![License](https://img.shields.io/badge/license-GPL--2.0-blue.svg)](https://img.shields.io/badge/license-GPL--2.0-blue.svg)
+[![License](https://img.shields.io/badge/license-GPL--2.0-blue.svg)](LICENSE)
 [![Build Status](https://secure.travis-ci.org/urbic/postgresql-similarity.png)](http://travis-ci.org/urbic/postgresql-similarity)
 
 ## Synopsis
