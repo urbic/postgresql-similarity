@@ -45,7 +45,7 @@ make && make install
 
 Pre-built binary packages for **openSUSE**, **Fedora**, **Mageia**, **RHEL**,
 **CentOS**, **Debian** and **Ubuntu** are available at [openSUSE Build
-Service](https://software.opensuse.org/download.html?project=home%3Aurbic&package=postgresql-similarity).
+Service](https://software.opensuse.org/download.html?project=home%3Aconcyclic&package=postgresql-similarity).
 
 ### Install the extension into database
 

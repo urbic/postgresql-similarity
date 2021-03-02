@@ -10,9 +10,6 @@ env:
   - PGVERSION=9.4
   - PGVERSION=9.5
   - PGVERSION=9.6
-  - PGVERSION=10.16
-  - PGVERSION=11.9
-  - PGVERSION=12.5
 
 before_script:
   - export PATH=/usr/lib/postgresql/$PGVERSION/bin:$PATH

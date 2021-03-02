@@ -11,7 +11,7 @@ URL:			https://github.com/urbic/%{name}
 Group:			Productivity/Databases/Tools
 BuildRoot:		%{_tmppath}/%{name}-%{version}
 Requires:		postgresql postgresql-server
-BuildRequires: 	gcc make postgresql-server-devel libicu-devel
+BuildRequires: 	gcc make postgresql-devel libicu-devel
 %if 0%{?mageia}
 BuildRequires:	postgresql9.6-devel
 %endif
