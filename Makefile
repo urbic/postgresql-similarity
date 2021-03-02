@@ -31,7 +31,7 @@ include $(PGXS)
 
 .PHONY: release obs-build obs-checkin
 
-DISTRIBUTION?=openSUSE_Leap_42.2
+DISTRIBUTION?=openSUSE_Tumbleweed
 DISTRIBUTION_BUILD_OPTS=$(if $(or $(findstring Fedora,$(DISTRIBUTION)),$(findstring Mageia,$(DISTRIBUTION))),--noverify,)
 OBS_HOME=obs-home
 OBS_FILES=\
@@ -72,4 +72,4 @@ $(OBS_HOME)/debian.copyright: LICENSE | $(OBS_HOME)
 	@cp $< $@
 
 $(OBS_HOME):
-	@osc checkout -o $@ home:concyclic $(PACKAGE)
+	@osc checkout -o $@ home:urbic $(PACKAGE)
