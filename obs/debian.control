@@ -1,7 +1,7 @@
 Source: __OBS_PACKAGE_NAME__
 Section: contrib/database
 Priority: optional
-Maintainer: Anton Shvetz <tz@sectorb.msk.ru>
+Maintainer: Anton Shvetz <shvetz.anton@gmail.com>
 Build-Depends: debhelper (>= 9),
 	postgresql-common,
 	postgresql-server-dev-all,
