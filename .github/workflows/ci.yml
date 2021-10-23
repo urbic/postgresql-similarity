@@ -15,9 +15,9 @@ jobs:
             - name: Install dependencies
               run: sudo apt-get install postgresql-common postgresql-server-dev-all libicu-dev
             - name: Prepare
-			  run: |
-			    sudo systemctl start postgresql.service
-				pg_isready
+              run: |
+                sudo systemctl start postgresql.service
+                pg_isready
             - name: Build
               run: make && sudo make install DESTDIR=/
             - name: Test
